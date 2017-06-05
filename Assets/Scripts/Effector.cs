@@ -29,10 +29,14 @@ public class Effector : MonoBehaviour {
     }
 
     void Update () {
-        if (IsTargetWithinMaxLength())
-            FabrikSolver();
-        else
-            SimpleSolver();
+        if (!IsTargetWithinMaxLength()) {
+            // Get the target back within bounds
+            Vector3 startingPosition = this.bones[0].transform.position;
+            Vector3 vec2target = (ikTarget.position - startingPosition).normalized;
+            ikTarget.position = startingPosition + vec2target * maxLength;
+        }
+        // Call the solver
+        FabrikSolver();
     }
 
     private bool IsTargetWithinMaxLength() {
@@ -43,8 +47,15 @@ public class Effector : MonoBehaviour {
     }
 
     private void FabrikSolver() {
+        ForwardPass();
+        BackwardPass();
     }
 
-    private void SimpleSolver() {
+    private void ForwardPass() {
+        // TODO
+    }
+
+    private void BackwardPass() {
+        // TODO
     }
 }
